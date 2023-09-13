@@ -3,10 +3,11 @@ import PlanetsContext from '../../context/planetContext/PlanetsContext';
 import ListTableBody from '../listTableBody/ListTableBody';
 import useFilter from '../../hooks/useFilter';
 
+import './table.css';
+
 export default function Table() {
-  const { planetsInfo } = useContext(PlanetsContext);
-  const [filters] = useFilter();
-  // const [filter, setFilter] = useState(filters.name);
+  const { planetsFiltered } = useContext(PlanetsContext);
+
   return (
     <table>
       <thead>
@@ -28,13 +29,13 @@ export default function Table() {
       </thead>
       <tbody>
 
-        {planetsInfo
-          .map((planet) => (
-            <ListTableBody
-              key={ planet.name }
-              planet={ planet }
-            />
-          ))}
+        {planetsFiltered.map((planet) => (
+          <ListTableBody
+            key={ planet.name }
+            planet={ planet }
+          />
+        ))}
+
       </tbody>
     </table>
   );

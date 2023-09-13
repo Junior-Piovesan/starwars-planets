@@ -1,4 +1,5 @@
 import { PlanetType } from '../../types/types';
+import './listTableBody.css';
 
 type PropsType = {
   planet:PlanetType
@@ -22,19 +23,19 @@ export default function ListTableBody({ planet: {
   return (
 
     <tr>
-      <td>{name}</td>
-      <td>{ rotation_period }</td>
-      <td>{orbital_period}</td>
-      <td>{diameter}</td>
-      <td>{climate}</td>
-      <td>{gravity}</td>
-      <td>{terrain}</td>
-      <td>{surface_water}</td>
-      <td>{population}</td>
-      <td>{films}</td>
-      <td>{created}</td>
-      <td>{edited}</td>
-      <td>{url}</td>
+      <td className="planet-info">{name}</td>
+      <td className="planet-info">{ rotation_period }</td>
+      <td className="planet-info">{orbital_period}</td>
+      <td className="planet-info">{diameter}</td>
+      <td className="planet-info">{climate}</td>
+      <td className="planet-info">{gravity}</td>
+      <td className="planet-info">{terrain}</td>
+      <td className="planet-info">{surface_water}</td>
+      <td className="planet-info">{population}</td>
+      <td className="planet-info">{films}</td>
+      <td className="planet-info">{created}</td>
+      <td className="planet-info">{edited}</td>
+      <td className="planet-info">{url}</td>
     </tr>
   );
 }

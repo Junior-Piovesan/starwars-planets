@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/planetContext/PlanetsContext';
+import { PlanetType } from '../types/types';
 
 const INITIAL_STATE = {
   name: '',
@@ -7,8 +8,8 @@ const INITIAL_STATE = {
 
 const useFilter = () => {
   const {
-    planetsInfo,
-    setPlanets,
+    planets,
+    setplanetsFiltered,
   } = useContext(PlanetsContext);
 
   const [filters, setFilters] = useState<any>(INITIAL_STATE);
@@ -23,18 +24,15 @@ const useFilter = () => {
   };
 
   const filterPlanetName = () => {
-    const newPlanetsList = planetsInfo
+    const newPlanetsList:PlanetType[] = planets
       .filter((planet) => planet.name
         .includes(filters.name));
-    // console.log(newPlanetsList);
-    setPlanets(newPlanetsList);
+    setplanetsFiltered(newPlanetsList);
   };
 
   useEffect(() => {
     filterPlanetName();
-    // console.log(newPlanetsList);
-
-    // setPlanetsInfo(newPlanetsList);
+    console.log('effect useFilter');
   }, [filters]);
 
   return [filters, handleChange];

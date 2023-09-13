@@ -8,7 +8,9 @@ type PropsType = {
 };
 
 export default function PlanetsProvider({ children }:PropsType) {
-  const [planetsInfo, setPlanets] = useState<PlanetType[]>([]);
+  const [planets, setPlanets] = useState<PlanetType[]>([]);
+  const [planetsFiltered, setplanetsFiltered] = useState<PlanetType[]>(planets);
+
   const [loading, setLoading] = useState<boolean>(true);
 
   // seta o estado global com informações dos planetas e retira a propriedade residents também seta o loading
@@ -21,18 +23,21 @@ export default function PlanetsProvider({ children }:PropsType) {
     });
 
     setPlanets(dataPlanets);
+    setplanetsFiltered(dataPlanets);
     setLoading(false);
   };
 
   const context = {
-    planetsInfo,
+    planets,
     setPlanets,
+    planetsFiltered,
+    setplanetsFiltered,
     loading,
   };
 
   useEffect(() => {
     getPlanets();
-    console.log('efect do provaidr');
+    console.log('efect provider');
   }, []);
   return (
     <PlanetsContext.Provider value={ context }>

@@ -15,8 +15,10 @@ export type PlanetType = {
 };
 
 export type PlanetsContextType = {
-  planetsInfo: PlanetType[]
-  // handleChange: (event:React.ChangeEvent<HTMLInputElement>) => void
+  planets: PlanetType[]
   setPlanets: (planets:PlanetType[]) => void
+  planetsFiltered:PlanetType[]
+  setplanetsFiltered:(planets:PlanetType[]) => void
   loading:boolean
+  // handleChange: (event:React.ChangeEvent<HTMLInputElement>) => void
 };
