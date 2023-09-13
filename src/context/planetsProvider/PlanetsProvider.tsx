@@ -26,11 +26,13 @@ export default function PlanetsProvider({ children }:PropsType) {
 
   const context = {
     planetsInfo,
+    setPlanets,
     loading,
   };
 
   useEffect(() => {
     getPlanets();
+    console.log('efect do provaidr');
   }, []);
   return (
     <PlanetsContext.Provider value={ context }>
