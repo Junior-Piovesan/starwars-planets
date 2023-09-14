@@ -42,11 +42,11 @@ const useFilter = () => {
   const operationChosenFilter = (planet:any) => {
     switch (filters.comparison) {
       case 'maior que':
-        return planet[filters.column] > filters.value;
+        return Number(planet[filters.column]) > Number(filters.value);
       case 'menor que':
-        return planet[filters.column] < filters.value;
+        return Number(planet[filters.column]) < Number(filters.value);
       case 'igual a':
-        return planet[filters.column] === filters.value;
+        return Number(planet[filters.column]) === Number(filters.value);
       default:
         break;
     }
