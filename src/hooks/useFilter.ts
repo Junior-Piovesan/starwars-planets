@@ -10,18 +10,19 @@ const INITIAL_STATE = {
 };
 
 const useFilter = () => {
+  const [filter, setFilter] = useState<any>(INITIAL_STATE);
+  const [filters, setFilters] = useState([]);
+
   const {
     planets,
     setplanetsFiltered,
   } = useContext(PlanetsContext);
 
-  const [filters, setFilters] = useState<any>(INITIAL_STATE);
-
   const handleChange = (
     { target: { name, value } }:any,
   ) => {
-    setFilters({
-      ...filters,
+    setFilter({
+      ...filter,
       [name]: value,
     });
   };
@@ -35,18 +36,18 @@ const useFilter = () => {
   const filterPlanetName = () => {
     const newPlanetsList:PlanetType[] = planets
       .filter((planet) => planet.name
-        .includes(filters.name));
+        .includes(filter.name));
     setplanetsFiltered(newPlanetsList);
   };
 
   const operationChosenFilter = (planet:any) => {
-    switch (filters.comparison) {
+    switch (filter.comparison) {
       case 'maior que':
-        return Number(planet[filters.column]) > Number(filters.value);
+        return Number(planet[filter.column]) > Number(filter.value);
       case 'menor que':
-        return Number(planet[filters.column]) < Number(filters.value);
+        return Number(planet[filter.column]) < Number(filter.value);
       case 'igual a':
-        return Number(planet[filters.column]) === Number(filters.value);
+        return Number(planet[filter.column]) === Number(filter.value);
       default:
         break;
     }
@@ -76,9 +77,9 @@ const useFilter = () => {
     filterPlanetName();
     // console.log('effect useFilter');
     // console.log(filters);
-  }, [filters]);
+  }, [filter]);
 
-  return [filters, handleChange, filterPlanetValues];
+  return [filter, handleChange, filterPlanetValues];
 };
 
 export default useFilter;

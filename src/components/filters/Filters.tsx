@@ -9,7 +9,7 @@ import useFilter from '../../hooks/useFilter';
 export default function Filters() {
   // const [filters, setFilters] = useState(INITIAL_STATE);
 
-  const [filters, handleChange, filterPlanetValues] = useFilter();
+  const [filter, handleChange, filterPlanetValues] = useFilter();
 
   // const handleChange = (
   //   { target: { name, value } }:React.ChangeEvent<HTMLInputElement>,
@@ -36,7 +36,7 @@ export default function Filters() {
             onChange={ handleChange }
             placeholder="filter by name"
             type="text"
-            value={ filters.name }
+            value={ filter.name }
             name="name"
           />
         </div>
@@ -46,7 +46,7 @@ export default function Filters() {
             onChange={ handleChange }
             data-testid="column-filter"
             name="column"
-            value={ filters.column }
+            value={ filter.column }
           >
             <option value="population">population</option>
             <option value="orbital_period">orbital_period</option>
@@ -59,7 +59,7 @@ export default function Filters() {
             onChange={ handleChange }
             data-testid="comparison-filter"
             name="comparison"
-            value={ filters.comparison }
+            value={ filter.comparison }
           >
             <option value="maior que">maior que</option>
             <option value="menor que">menor que</option>
@@ -71,7 +71,7 @@ export default function Filters() {
             data-testid="value-filter"
             type="number"
             name="value"
-            value={ filters.value }
+            value={ filter.value }
           />
           <button
             data-testid="button-filter"
