@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import PlanetsContext from '../planetContext/PlanetsContext';
-import { PlanetType } from '../../types/types';
+import { FilterType, PlanetType } from '../../types/types';
 import fetchPlanets from '../../utils/fetchPlanets';
 
 type PropsType = {
@@ -8,7 +8,10 @@ type PropsType = {
 };
 
 export default function PlanetsProvider({ children }:PropsType) {
+  const [filters, setFilters] = useState<FilterType[]>([]);
+
   const [planets, setPlanets] = useState<PlanetType[]>([]);
+
   const [planetsFiltered, setplanetsFiltered] = useState<PlanetType[]>(planets);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,17 +30,18 @@ export default function PlanetsProvider({ children }:PropsType) {
     setLoading(false);
   };
 
-  const context = {
+  const context = useMemo(() => ({
     planets,
     setPlanets,
     planetsFiltered,
+    filters,
+    setFilters,
     setplanetsFiltered,
     loading,
-  };
+  }), [planets, planetsFiltered, loading, filters]);
 
   useEffect(() => {
     getPlanets();
-    console.log('efect provider');
   }, []);
   return (
     <PlanetsContext.Provider value={ context }>

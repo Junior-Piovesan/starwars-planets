@@ -22,7 +22,7 @@ export default function ListTableBody({ planet: {
 } }:PropsType) {
   return (
 
-    <tr>
+    <tr className="table-row-body">
       <td className="planet-info">{name}</td>
       <td className="planet-info">{ rotation_period }</td>
       <td className="planet-info">{orbital_period}</td>

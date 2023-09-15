@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/planetContext/PlanetsContext';
-import { PlanetType } from '../types/types';
+import { FilterType, PlanetType } from '../types/types';
 
 const INITIAL_STATE = {
   name: '',
@@ -11,10 +11,11 @@ const INITIAL_STATE = {
 
 const useFilter = () => {
   const [filter, setFilter] = useState<any>(INITIAL_STATE);
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState<FilterType[]>([]);
 
   const {
     planets,
+    // planetsFiltered,
     setplanetsFiltered,
   } = useContext(PlanetsContext);
 
@@ -27,12 +28,7 @@ const useFilter = () => {
     });
   };
 
-  // const comparation = () => {
-  //   if (filters.comparison === 'maior que') {
-
-  //   }
-  // };
-
+  // filtra pelo campo de filtragem pelo nome
   const filterPlanetName = () => {
     const newPlanetsList:PlanetType[] = planets
       .filter((planet) => planet.name
@@ -40,46 +36,85 @@ const useFilter = () => {
     setplanetsFiltered(newPlanetsList);
   };
 
-  const operationChosenFilter = (planet:any) => {
-    switch (filter.comparison) {
+  // Adiciona filtro atual na lista de filtros
+  const addFilter = () => {
+    const newFilter = {
+      id: filters.length,
+      ...filter,
+    };
+    setFilters((prev) => [...prev, newFilter]);
+  };
+
+  // // Verifica qual operão escolhida pelos campos de filtragem numérica
+  const operationChosenFilter = (planet:any, fil:FilterType) => {
+    switch (fil.comparison) {
       case 'maior que':
-        return Number(planet[filter.column]) > Number(filter.value);
+        // return console.log('maior');
+
+        return planet[fil.column] > Number(fil.value);
       case 'menor que':
-        return Number(planet[filter.column]) < Number(filter.value);
+        // return console.log('menor');
+
+        return planet[fil.column] < Number(fil.value);
       case 'igual a':
-        return Number(planet[filter.column]) === Number(filter.value);
+        // return console.log('igula');
+
+        return planet[fil.column] === Number(fil.value);
       default:
         break;
     }
-
-    // if (filters.comparison === 'maior que') {
-    //   return filters.column > filters.value;
-    // }
-    // if (filters.comparison === 'menor que') {
-    //   return filters.column < filters.value;
-    // } if (filters.comparison === 'igual a') {
-    //   return filters.column === filters.value;
-    // }
   };
 
+  // Verifica qual operão escolhida pelos campos de filtragem numérica
+  // const operationChosenFilter = (planet:any) => {
+  //   switch (filter.comparison) {
+  //     case 'maior que':
+  //       return console.log('maior');
+
+  //       // return planet[fil.column] > Number(fil.value);
+  //     case 'menor que':
+  //       return console.log('menor');
+
+  //       // return planet[fil.column] < Number(fil.value);
+  //     case 'igual a':
+  //       return console.log('igula');
+
+  //       // return planet[fil.column] === Number(fil.value);
+  //     default:
+  //       break;
+  //   }
+  // };
+
+  // filtra pelo campo de filtragem pelos filtros numéricos
+  // const filterPlanetValues = () => {
+  //   addFilter();
+
+  //   const newPlanetsList:PlanetType[] = planets
+  //     .filter((planet) => operationChosenFilter(planet));
+
+  //   setplanetsFiltered(newPlanetsList);
+  // };
+
   const filterPlanetValues = () => {
+    // addFilter();
+
     const newPlanetsList:PlanetType[] = planets
-      .filter((planet) => operationChosenFilter(planet));
-
+      .filter((planet) => filters.every((fil) => operationChosenFilter(planet, fil)));
     setplanetsFiltered(newPlanetsList);
-    // setFilters(INITIAL_STATE);
+    return console.log(filters);
 
-    // console.log('clicou');
-    // console.log(newPlanetsList);
+    // setTimeout(() => {
+    //   const newPlanetsList:PlanetType[] = planets
+    //     .filter((planet) => filters.every((fil) => operationChosenFilter(planet, fil)));
+    //   setplanetsFiltered(newPlanetsList);
+    // }, 5000);
   };
 
   useEffect(() => {
     filterPlanetName();
-    // console.log('effect useFilter');
-    // console.log(filters);
   }, [filter]);
 
-  return [filter, handleChange, filterPlanetValues];
+  return { filter, filters, handleChange, filterPlanetValues, addFilter };
 };
 
 export default useFilter;

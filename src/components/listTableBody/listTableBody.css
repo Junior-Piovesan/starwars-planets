@@ -1,3 +1,4 @@
 .planet-info {
-  width: 200px;
+  overflow: auto;
+  width: 7.5%;
 }

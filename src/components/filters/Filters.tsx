@@ -1,32 +1,60 @@
-// import React, { useState } from 'react';
-// import InputText from '../inputText/InputText';
-import useFilter from '../../hooks/useFilter';
+import { useContext, useEffect, useState } from 'react';
+import { FilterType, PlanetType } from '../../types/types';
+import FilterList from '../filtersList/FilterList';
+import PlanetsContext from '../../context/planetContext/PlanetsContext';
 
-// const INITIAL_STATE = {
-//   name: '',
-// };
+const INITIAL_STATE = {
+  name: '',
+  column: 'population',
+  comparison: 'maior que',
+  value: '0',
+};
 
 export default function Filters() {
-  // const [filters, setFilters] = useState(INITIAL_STATE);
+  const [filter, setFilter] = useState<any>(INITIAL_STATE);
 
-  const [filter, handleChange, filterPlanetValues] = useFilter();
+  const {
+    planets,
+    filters,
+    setFilters,
+    setplanetsFiltered,
+  } = useContext(PlanetsContext);
 
-  // const handleChange = (
-  //   { target: { name, value } }:React.ChangeEvent<HTMLInputElement>,
-  // ) => {
-  //   setFilters({
-  //     ...filters,
-  //     [name]: value,
-  //   });
-  // };
-  // console.log(filters.name);
+  const handleChange = (
+    { target: { name, value } }:any,
+  ) => {
+    setFilter({
+      ...filter,
+      [name]: value,
+    });
+  };
+
+  // filtra pelo campo de filtragem pelo nome
+  const filterPlanetName = () => {
+    const newPlanetsList:PlanetType[] = planets
+      .filter((planet) => planet.name
+        .includes(filter.name));
+    setplanetsFiltered(newPlanetsList);
+  };
+
+  const addFilter = () => {
+    const newFilter = {
+      id: filters.length,
+      ...filter,
+    };
+    setFilters([...filters, newFilter]);
+  };
+
+  useEffect(() => {
+    filterPlanetName();
+  }, [filter]);
 
   return (
     <section>
       <form
         onSubmit={ (event) => {
           event.preventDefault();
-          filterPlanetValues();
+          addFilter();
         } }
       >
 
@@ -79,15 +107,16 @@ export default function Filters() {
             Filtrar
           </button>
         </div>
-        {/* <InputText
-          handleChange={ handleChange }
-          name="name"
-          label=" "
-          value={ filters.name }
-          placeholder="filter by name"
-          testId="name-filter"
-        /> */}
       </form>
+
+      {filters.length > 0 && (
+        <section className="filter-list-container">
+          {filters.map((element:FilterType) => (
+            <FilterList key={ element.id } filter={ element } />
+          ))}
+        </section>
+      )}
+
     </section>
   );
 }

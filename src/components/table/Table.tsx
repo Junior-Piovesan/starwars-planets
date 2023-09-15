@@ -1,17 +1,37 @@
-import React, { useContext, useState } from 'react';
+import { useContext } from 'react';
 import PlanetsContext from '../../context/planetContext/PlanetsContext';
 import ListTableBody from '../listTableBody/ListTableBody';
-import useFilter from '../../hooks/useFilter';
 
 import './table.css';
+import { FilterType } from '../../types/types';
 
 export default function Table() {
-  const { planetsFiltered } = useContext(PlanetsContext);
+  const { planetsFiltered, filters } = useContext(PlanetsContext);
+
+  const operationChosenFilter = (planet:any, fil:FilterType) => {
+    switch (fil.comparison) {
+      case 'maior que':
+
+        return planet[fil.column] > Number(fil.value);
+      case 'menor que':
+
+        return planet[fil.column] < Number(fil.value);
+      case 'igual a':
+
+        return Number(planet[fil.column]) === Number(fil.value);
+      default:
+        break;
+    }
+  };
+
+  // useEffect(() => {
+  //   setFilterList(filters);
+  // }, [filters]);
 
   return (
-    <table>
-      <thead>
-        <tr>
+    <table className="table">
+      <thead className="table-heade">
+        <tr className="table-row-heade">
           <th>Name</th>
           <th>Rotation Period</th>
           <th>Orbital Period</th>
@@ -27,14 +47,17 @@ export default function Table() {
           <th>URL</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody className="table-body">
 
-        {planetsFiltered.map((planet) => (
-          <ListTableBody
-            key={ planet.name }
-            planet={ planet }
-          />
-        ))}
+        { planetsFiltered
+          .filter((planet) => filters
+            .every((filter) => operationChosenFilter(planet, filter)))
+          .map((planet) => (
+            <ListTableBody
+              key={ planet.name }
+              planet={ planet }
+            />
+          ))}
 
       </tbody>
     </table>
