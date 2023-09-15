@@ -5,13 +5,22 @@ import PlanetsContext from '../../context/planetContext/PlanetsContext';
 
 const INITIAL_STATE = {
   name: '',
-  column: 'population',
+  column: '',
   comparison: 'maior que',
   value: '0',
 };
 
+const INITIAL_STATE_COLUMN_LIST = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
+
 export default function Filters() {
   const [filter, setFilter] = useState<any>(INITIAL_STATE);
+  const [columnList, setColumnList] = useState(INITIAL_STATE_COLUMN_LIST);
 
   const {
     planets,
@@ -45,9 +54,31 @@ export default function Filters() {
     setFilters([...filters, newFilter]);
   };
 
+  const updateColumnList = () => {
+    const newArray = columnList
+      .filter((info) => filters
+        .every((element) => info !== element.column));
+
+    setColumnList(newArray);
+
+    if (filter.column === '') {
+      setFilter({
+        ...filter,
+        column: columnList[0],
+      });
+    } else {
+      setFilter({
+        ...filter,
+        column: columnList[1],
+      });
+    }
+  };
+
   useEffect(() => {
     filterPlanetName();
-  }, [filter]);
+
+    updateColumnList();
+  }, [filter.name || filters]);
 
   return (
     <section>
@@ -70,17 +101,24 @@ export default function Filters() {
         </div>
 
         <div>
+
           <select
             onChange={ handleChange }
             data-testid="column-filter"
             name="column"
             value={ filter.column }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {columnList
+              .filter((info) => filters
+                .every((element) => info !== element.column))
+              .map((info) => (
+                <option
+                  key={ info }
+                  value={ info }
+                >
+                  {info}
+                </option>
+              ))}
           </select>
 
           <select
