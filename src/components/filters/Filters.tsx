@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { FilterType, PlanetType } from '../../types/types';
 import FilterList from '../filtersList/FilterList';
 import PlanetsContext from '../../context/planetContext/PlanetsContext';
+import removeFilter from '../../utils/removeFilter';
 
 const INITIAL_STATE = {
   name: '',
@@ -74,10 +75,23 @@ export default function Filters() {
     }
   };
 
+  const xablau = () => {
+    const newArray:string[] | any = filters
+      .map(
+        (element) => (typeof element.column === 'string' ? element.column : undefined),
+      );
+    console.log(columnList);
+    console.log(newArray);
+
+    setColumnList([...newArray, ...columnList]);
+  };
+
   useEffect(() => {
     filterPlanetName();
 
     updateColumnList();
+
+    console.log('oi');
   }, [filter.name || filters]);
 
   return (
@@ -148,10 +162,27 @@ export default function Filters() {
       </form>
 
       {filters.length > 0 && (
-        <section className="filter-list-container">
+        <section
+          className="filter-list-container"
+        >
           {filters.map((element:FilterType) => (
-            <FilterList key={ element.id } filter={ element } />
+            <FilterList
+              key={ element.id }
+              columnList={ columnList }
+              setColumnList={ setColumnList }
+              filter={ element }
+            />
           ))}
+
+          <button
+            onClick={ () => {
+              removeFilter(filters, setFilters, null);
+              xablau();
+            } }
+            data-testid="button-remove-filters"
+          >
+            Remove all filters
+          </button>
         </section>
       )}
 
