@@ -75,14 +75,11 @@ export default function Filters() {
     }
   };
 
-  const xablau = () => {
+  const combinesFiltersColumns = () => {
     const newArray:string[] | any = filters
       .map(
         (element) => (typeof element.column === 'string' ? element.column : undefined),
       );
-    console.log(columnList);
-    console.log(newArray);
-
     setColumnList([...newArray, ...columnList]);
   };
 
@@ -177,7 +174,7 @@ export default function Filters() {
           <button
             onClick={ () => {
               removeFilter(filters, setFilters, null);
-              xablau();
+              combinesFiltersColumns();
             } }
             data-testid="button-remove-filters"
           >
