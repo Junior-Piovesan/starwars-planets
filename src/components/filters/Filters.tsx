@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
-import { FilterType, PlanetType } from '../../types/types';
-import FilterList from '../filtersList/FilterList';
+import { PlanetType } from '../../types/types';
 import PlanetsContext from '../../context/planetContext/PlanetsContext';
-import removeFilter from '../../utils/removeFilter';
 import FiltersValue from './FiltersValue';
 import ListFilters from '../listFilters/ListFilters';
 import FilterOrder from './FilterOrder';
