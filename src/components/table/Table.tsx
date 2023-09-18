@@ -1,12 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../../context/planetContext/PlanetsContext';
 import ListTableBody from '../listTableBody/ListTableBody';
 
 import './table.css';
-import { FilterType } from '../../types/types';
+import { FilterType, PlanetType } from '../../types/types';
 
 export default function Table() {
-  const { planetsFiltered, filters } = useContext(PlanetsContext);
+  const [planetsList, setPlanetsList] = useState<PlanetType[]>([]);
+  const { filters, planetsFiltered } = useContext(PlanetsContext);
 
   const operationChosenFilter = (planet:any, fil:FilterType) => {
     switch (fil.comparison) {
@@ -24,9 +25,9 @@ export default function Table() {
     }
   };
 
-  // useEffect(() => {
-  //   setFilterList(filters);
-  // }, [filters]);
+  useEffect(() => {
+    setPlanetsList(planetsFiltered);
+  }, [planetsFiltered]);
 
   return (
     <table className="table">
@@ -49,15 +50,17 @@ export default function Table() {
       </thead>
       <tbody className="table-body">
 
-        { planetsFiltered
-          .filter((planet) => filters
-            .every((filter) => operationChosenFilter(planet, filter)))
-          .map((planet) => (
-            <ListTableBody
-              key={ planet.name }
-              planet={ planet }
-            />
-          ))}
+        {
+          planetsList
+            .filter((planet) => filters
+              .every((filter) => operationChosenFilter(planet, filter)))
+            .map((planet) => (
+              <ListTableBody
+                key={ planet.name }
+                planet={ planet }
+              />
+            ))
+         }
 
       </tbody>
     </table>

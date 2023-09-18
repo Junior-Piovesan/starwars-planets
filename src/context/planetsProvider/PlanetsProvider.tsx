@@ -16,6 +16,8 @@ export default function PlanetsProvider({ children }:PropsType) {
 
   const [loading, setLoading] = useState<boolean>(true);
 
+  const [l, setL] = useState<boolean>(true);
+
   // seta o estado global com informações dos planetas e retira a propriedade residents também seta o loading
   const getPlanets = async () => {
     setLoading(true);
@@ -39,6 +41,17 @@ export default function PlanetsProvider({ children }:PropsType) {
     setplanetsFiltered,
     loading,
   }), [planets, planetsFiltered, loading, filters]);
+  console.log(planetsFiltered);
+
+  // const context = {
+  //   planets,
+  //   setPlanets,
+  //   planetsFiltered,
+  //   filters,
+  //   setFilters,
+  //   setplanetsFiltered,
+  //   loading,
+  // };
 
   useEffect(() => {
     getPlanets();

@@ -3,12 +3,16 @@ import { FilterType, PlanetType } from '../../types/types';
 import FilterList from '../filtersList/FilterList';
 import PlanetsContext from '../../context/planetContext/PlanetsContext';
 import removeFilter from '../../utils/removeFilter';
+import FiltersValue from './FiltersValue';
+import ListFilters from '../listFilters/ListFilters';
+import FilterOrder from './FilterOrder';
 
 const INITIAL_STATE = {
   name: '',
   column: '',
   comparison: 'maior que',
   value: '0',
+  order: { column: 'population', sort: 'ASC' },
 };
 
 const INITIAL_STATE_COLUMN_LIST = [
@@ -20,13 +24,15 @@ const INITIAL_STATE_COLUMN_LIST = [
 ];
 
 export default function Filters() {
-  const [filter, setFilter] = useState<any>(INITIAL_STATE);
+  const [filter, setFilter] = useState(INITIAL_STATE);
   const [columnList, setColumnList] = useState(INITIAL_STATE_COLUMN_LIST);
+  const [dropOrdering, setdropOrdering] = useState(INITIAL_STATE_COLUMN_LIST);
 
   const {
     planets,
     filters,
     setFilters,
+    planetsFiltered,
     setplanetsFiltered,
   } = useContext(PlanetsContext);
 
@@ -36,6 +42,16 @@ export default function Filters() {
     setFilter({
       ...filter,
       [name]: value,
+    });
+  };
+
+  const handleChangeOrder = ({ target: { name, value } }:any) => {
+    setFilter({
+      ...filter,
+      order: {
+        ...filter.order,
+        [name]: value,
+      },
     });
   };
 
@@ -83,106 +99,50 @@ export default function Filters() {
     setColumnList([...newArray, ...columnList]);
   };
 
+  const ordinatedplanets = () => {
+    if (filter.order.sort === 'ASC') {
+      const ordenedPlanets = planetsFiltered
+        .sort((a:any, b:any) => (
+          Number(a[filter.order.column]) - Number(b[filter.order.column])));
+      setplanetsFiltered(ordenedPlanets);
+    } else {
+      const ordenedPlanets = planetsFiltered
+        .sort((a:any, b:any) => (
+          Number(a[filter.order.column]) + Number(b[filter.order.column])));
+      setplanetsFiltered(ordenedPlanets);
+    }
+  };
+
   useEffect(() => {
     filterPlanetName();
 
     updateColumnList();
-
-    console.log('oi');
-  }, [filter.name || filters]);
+  }, [filter.name, filters]);
 
   return (
     <section>
-      <form
-        onSubmit={ (event) => {
-          event.preventDefault();
-          addFilter();
-        } }
-      >
+      <FiltersValue
+        addFilter={ addFilter }
+        handleChange={ handleChange }
+        filter={ filter }
+        filters={ filters }
+        columnList={ columnList }
+      />
 
-        <div>
-          <input
-            data-testid="name-filter"
-            onChange={ handleChange }
-            placeholder="filter by name"
-            type="text"
-            value={ filter.name }
-            name="name"
-          />
-        </div>
+      <FilterOrder
+        filter={ filter }
+        dropOrdering={ dropOrdering }
+        ordinatedplanets={ ordinatedplanets }
+        handleChangeOrder={ handleChangeOrder }
+      />
 
-        <div>
-
-          <select
-            onChange={ handleChange }
-            data-testid="column-filter"
-            name="column"
-            value={ filter.column }
-          >
-            {columnList
-              .filter((info) => filters
-                .every((element) => info !== element.column))
-              .map((info) => (
-                <option
-                  key={ info }
-                  value={ info }
-                >
-                  {info}
-                </option>
-              ))}
-          </select>
-
-          <select
-            onChange={ handleChange }
-            data-testid="comparison-filter"
-            name="comparison"
-            value={ filter.comparison }
-          >
-            <option value="maior que">maior que</option>
-            <option value="menor que">menor que</option>
-            <option value="igual a">igual a</option>
-          </select>
-
-          <input
-            onChange={ handleChange }
-            data-testid="value-filter"
-            type="number"
-            name="value"
-            value={ filter.value }
-          />
-          <button
-            data-testid="button-filter"
-          >
-            Filtrar
-          </button>
-        </div>
-      </form>
-
-      {filters.length > 0 && (
-        <section
-          className="filter-list-container"
-        >
-          {filters.map((element:FilterType) => (
-            <FilterList
-              key={ element.id }
-              columnList={ columnList }
-              setColumnList={ setColumnList }
-              filter={ element }
-            />
-          ))}
-
-          <button
-            onClick={ () => {
-              removeFilter(filters, setFilters, null);
-              combinesFiltersColumns();
-            } }
-            data-testid="button-remove-filters"
-          >
-            Remove all filters
-          </button>
-        </section>
-      )}
-
+      <ListFilters
+        filters={ filters }
+        columnList={ columnList }
+        setColumnList={ setColumnList }
+        setFilters={ setFilters }
+        combinesFiltersColumns={ combinesFiltersColumns }
+      />
     </section>
   );
 }

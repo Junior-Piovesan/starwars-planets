@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import Table from '../../components/table/Table';
-import Filters from '../../components/filters/Filters';
 import PlanetsContext from '../../context/planetContext/PlanetsContext';
 import './home.css';
+import Filters from '../../components/filters/Filters';
 
 export default function Home() {
   const { loading } = useContext(PlanetsContext);

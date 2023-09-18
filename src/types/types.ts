@@ -15,11 +15,12 @@ export type PlanetType = {
 };
 
 export type FilterType = {
-  id:number,
+  id?:number,
   name: string,
   column: string,
   comparison: string,
   value: string,
+  order: { column: string, sort: string }
 };
 
 export type PlanetsContextType = {
