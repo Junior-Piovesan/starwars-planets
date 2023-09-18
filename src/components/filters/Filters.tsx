@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   column: '',
   comparison: 'maior que',
   value: '0',
-  order: { column: 'population', sort: 'ASC' },
+  order: { column: 'population', sort: '' },
 };
 
 const INITIAL_STATE_COLUMN_LIST = [
@@ -99,14 +99,14 @@ export default function Filters() {
 
   const ordinatedplanets = () => {
     if (filter.order.sort === 'ASC') {
-      const ordenedPlanets = planetsFiltered
-        .sort((a:any, b:any) => (
-          Number(a[filter.order.column]) - Number(b[filter.order.column])));
-      setplanetsFiltered([...ordenedPlanets]);
-    } else {
-      const ordenedPlanets = planetsFiltered
+      const ordenedPlanets = planets
         .sort((a:any, b:any) => (
           Number(a[filter.order.column]) + Number(b[filter.order.column])));
+      setplanetsFiltered([...ordenedPlanets]);
+    } if (filter.order.sort === 'DESC') {
+      const ordenedPlanets = planets
+        .sort((a:any, b:any) => (
+          Number(a[filter.order.column]) - Number(b[filter.order.column])));
       setplanetsFiltered([...ordenedPlanets]);
     }
   };
@@ -116,7 +116,8 @@ export default function Filters() {
 
     updateColumnList();
   }, [filter.name, filters]);
-console.log(filter.order);
+
+  console.log(filter.order);
 
   return (
     <section>
