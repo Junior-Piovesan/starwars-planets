@@ -102,12 +102,12 @@ export default function Filters() {
       const ordenedPlanets = planetsFiltered
         .sort((a:any, b:any) => (
           Number(a[filter.order.column]) - Number(b[filter.order.column])));
-      setplanetsFiltered(ordenedPlanets);
+      setplanetsFiltered([...ordenedPlanets]);
     } else {
       const ordenedPlanets = planetsFiltered
         .sort((a:any, b:any) => (
           Number(a[filter.order.column]) + Number(b[filter.order.column])));
-      setplanetsFiltered(ordenedPlanets);
+      setplanetsFiltered([...ordenedPlanets]);
     }
   };
 
@@ -116,6 +116,7 @@ export default function Filters() {
 
     updateColumnList();
   }, [filter.name, filters]);
+console.log(filter.order);
 
   return (
     <section>

@@ -23,7 +23,12 @@ export default function ListTableBody({ planet: {
   return (
 
     <tr className="table-row-body">
-      <td data-testid="planet-name" className="planet-info">{name}</td>
+      <td
+        data-testid="planet-name"
+        className="planet-info"
+      >
+        {name}
+      </td>
       <td className="planet-info">{ rotation_period }</td>
       <td className="planet-info">{orbital_period}</td>
       <td className="planet-info">{diameter}</td>

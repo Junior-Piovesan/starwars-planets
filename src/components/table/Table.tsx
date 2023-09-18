@@ -27,6 +27,7 @@ export default function Table() {
 
   useEffect(() => {
     setPlanetsList(planetsFiltered);
+    // console.log(planetsFiltered);
   }, [planetsFiltered]);
 
   return (
@@ -51,7 +52,7 @@ export default function Table() {
       <tbody className="table-body">
 
         {
-          planetsList
+          planetsFiltered
             .filter((planet) => filters
               .every((filter) => operationChosenFilter(planet, filter)))
             .map((planet) => (
@@ -61,6 +62,18 @@ export default function Table() {
               />
             ))
          }
+
+        {/* {
+          planetsList
+            .filter((planet) => filters
+              .every((filter) => operationChosenFilter(planet, filter)))
+            .map((planet) => (
+              <ListTableBody
+                key={ planet.name }
+                planet={ planet }
+              />
+            ))
+         } */}
 
       </tbody>
     </table>

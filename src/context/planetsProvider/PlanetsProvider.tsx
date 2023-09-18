@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import PlanetsContext from '../planetContext/PlanetsContext';
 import { FilterType, PlanetType } from '../../types/types';
-import fetchPlanets from '../../utils/fetchPlanets';
+import { fetchPlanets } from '../../utils/fetchPlanets';
 
 type PropsType = {
   children:React.ReactNode
