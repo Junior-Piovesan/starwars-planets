@@ -1,12 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import PlanetsContext from '../../context/planetContext/PlanetsContext';
 import ListTableBody from '../listTableBody/ListTableBody';
 
 import './table.css';
-import { FilterType, PlanetType } from '../../types/types';
+import { FilterType } from '../../types/types';
 
 export default function Table() {
-  const [planetsList, setPlanetsList] = useState<PlanetType[]>([]);
   const { filters, planetsFiltered } = useContext(PlanetsContext);
 
   const operationChosenFilter = (planet:any, fil:FilterType) => {
@@ -24,11 +23,6 @@ export default function Table() {
         break;
     }
   };
-
-  useEffect(() => {
-    setPlanetsList(planetsFiltered);
-    // console.log(planetsFiltered);
-  }, [planetsFiltered]);
 
   return (
     <table className="table">
@@ -62,18 +56,6 @@ export default function Table() {
               />
             ))
          }
-
-        {/* {
-          planetsList
-            .filter((planet) => filters
-              .every((filter) => operationChosenFilter(planet, filter)))
-            .map((planet) => (
-              <ListTableBody
-                key={ planet.name }
-                planet={ planet }
-              />
-            ))
-         } */}
 
       </tbody>
     </table>

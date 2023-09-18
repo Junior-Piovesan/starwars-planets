@@ -4,6 +4,7 @@ import PlanetsContext from '../../context/planetContext/PlanetsContext';
 import FiltersValue from './FiltersValue';
 import ListFilters from '../listFilters/ListFilters';
 import FilterOrder from './FilterOrder';
+import sortOperation from '../../utils/sort operation';
 
 const INITIAL_STATE = {
   name: '',
@@ -30,7 +31,6 @@ export default function Filters() {
     planets,
     filters,
     setFilters,
-    planetsFiltered,
     setplanetsFiltered,
   } = useContext(PlanetsContext);
 
@@ -101,12 +101,16 @@ export default function Filters() {
     if (filter.order.sort === 'ASC') {
       const ordenedPlanets = planets
         .sort((a:any, b:any) => (
-          Number(a[filter.order.column]) + Number(b[filter.order.column])));
+          sortOperation(a[filter.order.column], true)
+           - sortOperation(b[filter.order.column], true)));
+
       setplanetsFiltered([...ordenedPlanets]);
     } if (filter.order.sort === 'DESC') {
       const ordenedPlanets = planets
         .sort((a:any, b:any) => (
-          Number(a[filter.order.column]) - Number(b[filter.order.column])));
+          sortOperation(b[filter.order.column], false)
+           - sortOperation(a[filter.order.column], false)));
+
       setplanetsFiltered([...ordenedPlanets]);
     }
   };
@@ -116,8 +120,6 @@ export default function Filters() {
 
     updateColumnList();
   }, [filter.name, filters]);
-
-  console.log(filter.order);
 
   return (
     <section>

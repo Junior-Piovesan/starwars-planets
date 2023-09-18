@@ -41,16 +41,6 @@ export default function PlanetsProvider({ children }:PropsType) {
   }), [planets, planetsFiltered, loading, filters]);
   console.log(planetsFiltered);
 
-  // const context = {
-  //   planets,
-  //   setPlanets,
-  //   planetsFiltered,
-  //   filters,
-  //   setFilters,
-  //   setplanetsFiltered,
-  //   loading,
-  // };
-
   useEffect(() => {
     getPlanets();
   }, []);
