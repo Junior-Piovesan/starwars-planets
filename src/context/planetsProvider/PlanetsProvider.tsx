@@ -39,7 +39,6 @@ export default function PlanetsProvider({ children }:PropsType) {
     setplanetsFiltered,
     loading,
   }), [planets, planetsFiltered, loading, filters]);
-  console.log(planetsFiltered);
 
   useEffect(() => {
     getPlanets();

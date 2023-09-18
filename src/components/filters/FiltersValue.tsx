@@ -101,7 +101,7 @@ export default function Filters({
         <button
           data-testid="button-filter"
         >
-          Filtrar
+          Filter
         </button>
       </div>
 

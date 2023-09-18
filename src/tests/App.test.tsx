@@ -1,4 +1,4 @@
-import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { getAllByText, render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import {vi} from 'vitest'
@@ -128,8 +128,91 @@ describe('',() => {
       
   })
 
-  test('Verifica se ao filtrar por valores a tabela renderiza corretamente',async () => {
-    const { debug } = render( 
+  test('Verifica se ao filtrar pelo filtro de valores a tabela renderiza como esperado',async () => {
+    const {debug} = render( 
+      <PlanetsProvider>
+        <App />
+      </PlanetsProvider> );
+
+
+    const loading = screen.getByRole('heading',{level:2});
+    const selectColumn = screen.getByTestId('column-filter')
+    const selectComparison = screen.getByTestId('comparison-filter')
+    const valueInput = screen.getByTestId('value-filter')
+
+    const buttonFilter = screen.getByTestId('button-filter')
+    
+    
+    await waitForElementToBeRemoved(loading);
+
+
+    await userEvent.selectOptions(selectColumn,'population')
+    await userEvent.selectOptions(selectComparison,'maior que')
+    await userEvent.type(valueInput,'08900')
+    await userEvent.click(buttonFilter)
+
+    const planets = screen.getAllByTestId('planet-name')
+      
+    expect(planets).toHaveLength(7)
+
+    await userEvent.selectOptions(selectColumn,'surface_water')
+    await userEvent.selectOptions(selectComparison,'menor que')
+    await userEvent.click(buttonFilter)
+    
+    expect(screen.getAllByTestId('planet-name')).toHaveLength(6)
+
+    const btnRemoveAll = screen.getByRole('button', {
+      name: /remove all filters/i
+    })
+
+    await userEvent.click(btnRemoveAll)
+    expect(screen.getAllByTestId('planet-name')).toHaveLength(10)
+    expect(btnRemoveAll).not.toBeInTheDocument()
+
+  });
+
+  test('Verifica se comportamento dos botões de remover filtro',async () => {
+    render( 
+      <PlanetsProvider>
+        <App />
+      </PlanetsProvider> );
+
+
+    const loading = screen.getByRole('heading',{level:2});
+    const selectColumn = screen.getByTestId('column-filter')
+    const selectComparison = screen.getByTestId('comparison-filter')
+    const valueInput = screen.getByTestId('value-filter')
+
+    const buttonFilter = screen.getByTestId('button-filter')
+    
+    
+    await waitForElementToBeRemoved(loading);
+
+
+    await userEvent.selectOptions(selectColumn,'population')
+    await userEvent.selectOptions(selectComparison,'maior que')
+    await userEvent.type(valueInput,'08900')
+    await userEvent.click(buttonFilter)
+
+    const planets = screen.getAllByTestId('planet-name')
+      
+    expect(planets).toHaveLength(7)
+
+    await userEvent.selectOptions(selectColumn,'surface_water')
+    await userEvent.selectOptions(selectComparison,'menor que')
+    await userEvent.click(buttonFilter)
+    
+    expect(screen.getAllByTestId('planet-name')).toHaveLength(6)
+
+    const btnRemove = screen.getAllByText('Remove')
+
+    await userEvent.click(btnRemove[1])
+
+    expect(planets).toHaveLength(7)
+  })
+
+  test('Verifica se a tabela é ordenada como esperado',async () => {
+   render( 
       <PlanetsProvider>
         <App />
       </PlanetsProvider> );
@@ -137,19 +220,38 @@ describe('',() => {
 
     const loading = screen.getByRole('heading',{level:2});
 
-    const selectedValue = screen.getByTestId('column-filter');
-    const selectedComparison = screen.getByTestId('comparison-filter');
-    const inputNumber = screen.getByTestId('value-filter');
+    
+    const descInput = screen.getByRole('radio', {
+      name: /downward/i
+    });
 
-    const btnFilter = screen.getByTestId('button-filter');
-
+    const ascInput = screen.getByText(/ascending/i);
+    
+    
+    
+    const btnorder = screen.getByRole('button', {
+      name: /order/i
+    });
+    
     
     await waitForElementToBeRemoved(loading);
+    
+    expect(screen.getAllByTestId('planet-name')[0]).toHaveTextContent('Tatooine');
 
-    await userEvent.click(selectedValue)
+    await userEvent.click(descInput);
 
+    await userEvent.click(btnorder);
 
-      
-  })
-})
+    expect(screen.getAllByTestId('planet-name')[0]).toHaveTextContent('Coruscant');
+
+    expect(screen.getAllByTestId('planet-name')[9]).toHaveTextContent('Dagobah');
+
+    await userEvent.click(ascInput);
+    await userEvent.click(btnorder);
+
+    expect(screen.getAllByTestId('planet-name')[0]).toHaveTextContent('Yavin IV');
+
+    expect(screen.getAllByTestId('planet-name')[9]).toHaveTextContent('Dagobah');
+  });
+});
 
