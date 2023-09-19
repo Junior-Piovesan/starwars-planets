@@ -4,6 +4,8 @@ import PlanetsContext from '../../context/planetContext/PlanetsContext';
 import styles from './home.module.css';
 import Filters from '../../components/filters/Filters';
 
+import image from '../../assets/ciencia-do-planeta-espacial-a-noite-gerada-por-ia.jpg';
+
 export default function Home() {
   const { loading } = useContext(PlanetsContext);
   return (
@@ -18,7 +20,10 @@ export default function Home() {
       {loading ? (
         <h2 className={ styles.loading }>Loading...</h2>
       ) : (
-        <Table />
+        <>
+          <img src={ image } alt="" />
+          <Table />
+        </>
       )}
     </section>
   );
