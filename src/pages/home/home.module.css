@@ -1,5 +1,6 @@
 .titleContainer {
   margin-bottom: 20px;
+  z-index: 2;
 }
 
 .title, .subTitle {
@@ -27,8 +28,16 @@
 
 .homeContainer {
   align-items: center;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100%;
+}
+
+img {
+  height: 100vh;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
 }

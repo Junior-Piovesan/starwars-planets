@@ -1,8 +1,12 @@
+.table {
+  z-index: 2;
+}
+
 .tableHead, .tableBody {
   align-items: center;
   display: flex;
   flex-direction: column;
-  min-width: 100%;
+  width: 100%;
 }
 
 .name {
@@ -72,4 +76,5 @@
 
 .trHead {
   background-color: rgba(85, 85, 85, 0.3);
+  border-radius: 8px;
 }
