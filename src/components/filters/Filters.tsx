@@ -6,6 +6,8 @@ import ListFilters from '../listFilters/ListFilters';
 import FilterOrder from './FilterOrder';
 import sortOperation from '../../utils/sort operation';
 
+import styles from './filters.module.css';
+
 const INITIAL_STATE = {
   name: '',
   column: '',
@@ -122,7 +124,7 @@ export default function Filters() {
   }, [filter.name, filters]);
 
   return (
-    <section>
+    <section className={ styles.container }>
       <FiltersValue
         addFilter={ addFilter }
         handleChange={ handleChange }

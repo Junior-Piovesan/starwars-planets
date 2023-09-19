@@ -1,0 +1,63 @@
+.tableHead, .tableBody {
+  flex-direction: column;
+  min-width: 100%;
+}
+
+.name {
+  border-bottom: 1px solid yellow;
+  border-left: 1px solid yellow;
+  border-right: 1px solid yellow;
+  height: 50px;
+  padding-top: 10px;
+  text-align: center;
+  width: 120px;
+}
+
+.surfaceWater {
+  border-bottom: 1px solid yellow;
+  border-right: 1px solid yellow;
+  height: 50px;
+  padding-top: 10px;
+  text-align: center;
+  width: 130px;
+}
+
+.terrain, .rotationPeriod, .orbitalPeriod, .diameter, .population {
+  border-bottom: 1px solid yellow;
+  border-right: 1px solid yellow;
+  height: 50px;
+  padding-top: 10px;
+  text-align: center;
+  width: 150px;
+}
+
+.orbitalPeriod, .climate, .gravity, .created, .edited {
+  border-bottom: 1px solid yellow;
+  border-right: 1px solid yellow;
+  height: 50px;
+  padding-top: 10px;
+  text-align: center;
+  width: 200px;
+}
+
+.films, .url {
+  border-bottom: 1px solid yellow;
+  border-right: 1px solid yellow;
+  height: 50px;
+  overflow-x: auto;
+  padding-top: 10px;
+  text-align: center;
+  width: 350px;
+}
+
+
+.trHead, .tr {
+  display: flex;
+  padding-top: 10px;
+  width: 100%;
+}
+
+.trHead {
+  background-color: rgb(53, 53, 53, 0.3);
+  display: flex;
+}

@@ -1,5 +1,7 @@
 import { FilterType } from '../../types/types';
 
+import styles from './filters.module.css';
+
 type PropsType = {
   filter:FilterType,
   dropOrdering:string[],
@@ -14,18 +16,21 @@ export default function FilterOrder({
   handleChangeOrder,
 }:PropsType) {
   return (
-    <section>
-      <form
-        onSubmit={ (e) => {
-          e.preventDefault();
-          ordinatedplanets();
-        } }
-      >
+    <form
+      onSubmit={ (e) => {
+        e.preventDefault();
+        ordinatedplanets();
+      } }
+      className={ styles.formOrder }
+    >
+
+      <div className={ styles.orderBox }>
         <select
           onChange={ handleChangeOrder }
           name="column"
           value={ filter.order.column }
           data-testid="column-sort"
+          className={ styles.selectOrderColumn }
         >
 
           {dropOrdering
@@ -39,39 +44,39 @@ export default function FilterOrder({
             ))}
 
         </select>
+        <label htmlFor="asc">
+          Ascending
+          <input
+            onChange={ handleChangeOrder }
+            id="asc"
+            type="radio"
+            name="sort"
+            value="ASC"
+            data-testid="column-sort-input-asc"
+            className={ styles.inputOrder }
 
-        <div>
-          <label htmlFor="asc">
-            Ascending
-            <input
-              onChange={ handleChangeOrder }
-              id="asc"
-              type="radio"
-              name="sort"
-              value="ASC"
-              data-testid="column-sort-input-asc"
-            />
-          </label>
+          />
+        </label>
 
-          <label htmlFor="desc">
-            Downward
-            <input
-              onChange={ handleChangeOrder }
-              id="desc"
-              type="radio"
-              name="sort"
-              value="DESC"
-              data-testid="column-sort-input-desc"
-            />
-          </label>
-        </div>
-
+        <label htmlFor="desc">
+          Downward
+          <input
+            onChange={ handleChangeOrder }
+            id="desc"
+            type="radio"
+            name="sort"
+            value="DESC"
+            data-testid="column-sort-input-desc"
+            className={ styles.inputOrder }
+          />
+        </label>
         <button
           data-testid="column-sort-button"
         >
           Order
         </button>
-      </form>
-    </section>
+      </div>
+
+    </form>
   );
 }

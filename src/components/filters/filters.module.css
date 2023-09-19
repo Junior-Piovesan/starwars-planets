@@ -1,0 +1,86 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.formValue {
+  border-left: 1px solid yellow;
+  width: 50%;
+}
+
+.formOrder {
+  border-right: 1px solid yellow;
+  width: 50%;
+}
+
+.formOrder, .formValue {
+  border-bottom: 1px solid yellow;
+  border-top: 1px solid yellow;
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  justify-content: end;
+  margin-bottom: 20px;
+}
+
+.inputNameBox {
+  margin-bottom: 20px;
+  text-align: right;
+  width: 100%;
+}
+
+.filterValueBox, .orderBox {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+
+.inputName, .selectValueNumber {
+  width: 200px;
+}
+
+.selectValueColumn, .selectOrderColumn {
+  width: 200px;
+}
+
+.selectValuecomparison {
+  width: 150px;
+}
+
+.inputOrder {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+label {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+}
+
+input, select, option {
+  background-color: transparent;
+  border: 1px solid yellow;
+  color: white;
+  font-weight: 600;
+  height: 35px;
+  outline: none;
+  padding-left: 15px;
+}
+
+button {
+  background-color: transparent;
+  border: 1px solid yellow;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  height: 50px;
+  letter-spacing: 2px;
+  width: 80px;
+}

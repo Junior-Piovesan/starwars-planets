@@ -2,7 +2,8 @@ import { useContext } from 'react';
 import PlanetsContext from '../../context/planetContext/PlanetsContext';
 import ListTableBody from '../listTableBody/ListTableBody';
 
-import './table.css';
+import styles from './table.module.css';
+
 import { FilterType } from '../../types/types';
 
 export default function Table() {
@@ -25,25 +26,25 @@ export default function Table() {
   };
 
   return (
-    <table className="table">
-      <thead className="table-heade">
-        <tr className="table-row-heade">
-          <th>Name</th>
-          <th>Rotation Period</th>
-          <th>Orbital Period</th>
-          <th>Diameter</th>
-          <th>Climate</th>
-          <th>Gravity</th>
-          <th>Terrain</th>
-          <th>Surface Water</th>
-          <th>Population</th>
-          <th>Films</th>
-          <th>Created</th>
-          <th>Edited</th>
-          <th>URL</th>
+    <table className={ styles.table }>
+      <thead className={ styles.tableHead }>
+        <tr className={ styles.trHead }>
+          <th className={ styles.name }>Name</th>
+          <th className={ styles.rotationPeriod }>Rotation Period</th>
+          <th className={ styles.orbitalPeriod }>Orbital Period</th>
+          <th className={ styles.diameter }>Diameter</th>
+          <th className={ styles.climate }>Climate</th>
+          <th className={ styles.gravity }>Gravity</th>
+          <th className={ styles.terrain }>Terrain</th>
+          <th className={ styles.surfaceWater }>Surface Water</th>
+          <th className={ styles.population }>Population</th>
+          <th className={ styles.films }>Films</th>
+          <th className={ styles.created }>Created</th>
+          <th className={ styles.edited }>Edited</th>
+          <th className={ styles.url }>URL</th>
         </tr>
       </thead>
-      <tbody className="table-body">
+      <tbody className={ styles.tableBody }>
 
         {
           planetsFiltered

@@ -1,26 +1,6 @@
-// import { useContext, useEffect, useState } from 'react';
-// import { FilterType, PlanetType } from '../../types/types';
-// import FilterList from '../filtersList/FilterList';
-// import PlanetsContext from '../../context/planetContext/PlanetsContext';
-// import removeFilter from '../../utils/removeFilter';
-
 import { FilterType } from '../../types/types';
 
-// const INITIAL_STATE = {
-//   name: '',
-//   column: '',
-//   comparison: 'maior que',
-//   value: '0',
-//   order: { column: '', sort: 'ASC' },
-// };
-
-// const INITIAL_STATE_COLUMN_LIST = [
-//   'population',
-//   'orbital_period',
-//   'diameter',
-//   'rotation_period',
-//   'surface_water',
-// ];
+import styles from './filters.module.css';
 
 type PropTypes = {
   addFilter: () => void,
@@ -43,11 +23,13 @@ export default function Filters({
         event.preventDefault();
         addFilter();
       } }
+      className={ styles.formValue }
     >
       {/* {filtragen por Nome} */}
 
-      <div>
+      <div className={ styles.inputNameBox }>
         <input
+          className={ styles.inputName }
           data-testid="name-filter"
           onChange={ handleChange }
           placeholder="filter by name"
@@ -59,13 +41,14 @@ export default function Filters({
 
       {/* {filtragen de valores} */}
 
-      <div>
+      <div className={ styles.filterValueBox }>
 
         <select
           onChange={ handleChange }
           data-testid="column-filter"
           name="column"
           value={ filter.column }
+          className={ styles.selectValueColumn }
         >
           {columnList
             .filter((info) => filters
@@ -85,6 +68,8 @@ export default function Filters({
           data-testid="comparison-filter"
           name="comparison"
           value={ filter.comparison }
+          className={ styles.selectValuecomparison }
+
         >
           <option value="maior que">maior que</option>
           <option value="menor que">menor que</option>
@@ -97,6 +82,8 @@ export default function Filters({
           type="number"
           name="value"
           value={ filter.value }
+          className={ styles.selectValueNumber }
+
         />
         <button
           data-testid="button-filter"
