@@ -1,11 +1,12 @@
 .tableHead, .tableBody {
+  align-items: center;
+  display: flex;
   flex-direction: column;
   min-width: 100%;
 }
 
 .name {
   border-bottom: 1px solid yellow;
-  border-left: 1px solid yellow;
   border-right: 1px solid yellow;
   height: 50px;
   padding-top: 10px;
@@ -15,7 +16,7 @@
 
 .surfaceWater {
   border-bottom: 1px solid yellow;
-  border-right: 1px solid yellow;
+  border-left: 1px solid yellow;
   height: 50px;
   padding-top: 10px;
   text-align: center;
@@ -24,11 +25,15 @@
 
 .terrain, .rotationPeriod, .orbitalPeriod, .diameter, .population {
   border-bottom: 1px solid yellow;
-  border-right: 1px solid yellow;
   height: 50px;
   padding-top: 10px;
   text-align: center;
   width: 150px;
+}
+
+.population {
+  border-right: 1px solid yellow;
+
 }
 
 .orbitalPeriod, .climate, .gravity, .created, .edited {
@@ -42,7 +47,6 @@
 
 .films, .url {
   border-bottom: 1px solid yellow;
-  border-right: 1px solid yellow;
   height: 50px;
   overflow-x: auto;
   padding-top: 10px;
@@ -50,14 +54,22 @@
   width: 350px;
 }
 
+.url {
+  width: 280px;
+}
+
+.films {
+  border-right: 1px solid yellow;
+
+}
+
 
 .trHead, .tr {
   display: flex;
+  justify-content: center;
   padding-top: 10px;
-  width: 100%;
 }
 
 .trHead {
-  background-color: rgb(53, 53, 53, 0.3);
-  display: flex;
+  background-color: rgba(85, 85, 85, 0.3);
 }

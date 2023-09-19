@@ -16,7 +16,7 @@ export default function Home() {
       </div>
       <Filters />
       {loading ? (
-        <h2>Loading...</h2>
+        <h2 className={ styles.loading }>Loading...</h2>
       ) : (
         <Table />
       )}
